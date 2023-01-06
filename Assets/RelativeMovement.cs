@@ -7,7 +7,7 @@ public class RelativeMovement : MonoBehaviour
     public Transform target;
 
     public float rotSpeed = 15.0f;
-    public float moveSpeed = 6.0f;
+    public float moveSpeed = 15.0f;
 
     private CharacterController charController;
 
