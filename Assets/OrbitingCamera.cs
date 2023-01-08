@@ -14,7 +14,7 @@ public class OrbitingCamera : MonoBehaviour
     void Start()
     {
         //target = GameObject.Find("player Variant(Clone)").GetComponent<Transform>();
-        target = GetComponentInParent<Transform>();
+        target = transform.parent.GetComponent<Transform>();
         rotY = transform.eulerAngles.y;
         offset = target.position - transform.position;
     }
