@@ -15,16 +15,19 @@ public class RelativeMovement : NetworkBehaviour
     //private Transform target;
 
     public float rotSpeed = 15.0f;
-    public float moveSpeed = 150.0f;
+    public float moveSpeed = 200.0f;
+    public float gravity = -9.8f;
 
     public NetworkVariable<Vector3> Position = new NetworkVariable<Vector3>();
     public NetworkVariable<Quaternion> PositionRotation = new NetworkVariable<Quaternion>();
-    private CharacterController charController;
+    //private CharacterController charController;
+    private Rigidbody rigidBody;
 
     public override void OnNetworkSpawn()
     {
         //transform.position = new Vector3(3f, 3f, 3f);
-        charController = GetComponent<CharacterController>();
+        //charController = GetComponent<CharacterController>();
+        rigidBody = GetComponent<Rigidbody>();
 
         if (NetworkManager.Singleton.IsClient && IsOwner)
         {
@@ -76,6 +79,8 @@ public class RelativeMovement : NetworkBehaviour
 
             //movement *= Time.deltaTime;
         }
+        //movement.y = gravity;
+
         movement *= Time.deltaTime;
         //charController.Move(movement);
         //currentPosition = transform.position;
@@ -123,9 +128,10 @@ public class RelativeMovement : NetworkBehaviour
         if (NetworkManager.Singleton.IsServer)
         {
             //charController.Move(Position.Value);
+            //rigidBody.MovePosition(Position.Value);
             transform.position = Position.Value;
             transform.rotation = PositionRotation.Value;
-            //UnityEngine.Debug.Log("Server position var is: " + Position.Value);
+            UnityEngine.Debug.Log("Server position var is: " + Position.Value);
         } 
         else
         {
@@ -137,10 +143,11 @@ public class RelativeMovement : NetworkBehaviour
             //}
             //UnityEngine.Debug.Log(Camera.current);
             Move();
+            //rigidBody.MovePosition(Position.Value);
             transform.position = Position.Value;
             transform.rotation = PositionRotation.Value;
             //charController.Move(Position.Value);
-            //UnityEngine.Debug.Log("Client position var is: " + Position.Value);
+            UnityEngine.Debug.Log("Client position var is: " + Position.Value);
         }
     }
 }
