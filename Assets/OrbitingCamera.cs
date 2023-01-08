@@ -13,6 +13,8 @@ public class OrbitingCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //target = GameObject.Find("player Variant(Clone)").GetComponent<Transform>();
+        target = GetComponentInParent<Transform>();
         rotY = transform.eulerAngles.y;
         offset = target.position - transform.position;
     }
