@@ -110,6 +110,8 @@ public class RelativeMovement : NetworkBehaviour
                 return;
             }
             SubmitPositionRequestServerRpc(nextTransform.Item1, nextTransform.Item2);
+            //Position.Value = nextTransform.Item1;
+            //PositionRotation.Value = nextTransform.Item2;
         }
     }
 
@@ -128,8 +130,8 @@ public class RelativeMovement : NetworkBehaviour
         if (NetworkManager.Singleton.IsServer)
         {
             //charController.Move(Position.Value);
-            //rigidBody.MovePosition(Position.Value);
-            transform.position = Position.Value;
+            rigidBody.MovePosition(Position.Value);
+            //transform.position = Position.Value;
             transform.rotation = PositionRotation.Value;
             UnityEngine.Debug.Log("Server position var is: " + Position.Value);
         } 
@@ -143,8 +145,8 @@ public class RelativeMovement : NetworkBehaviour
             //}
             //UnityEngine.Debug.Log(Camera.current);
             Move();
-            //rigidBody.MovePosition(Position.Value);
-            transform.position = Position.Value;
+            rigidBody.MovePosition(Position.Value);
+            //transform.position = Position.Value;
             transform.rotation = PositionRotation.Value;
             //charController.Move(Position.Value);
             UnityEngine.Debug.Log("Client position var is: " + Position.Value);
